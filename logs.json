@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-04-29T10:49:52.763108",
+    "message": "Congratulations! You've won a $1000 Walmart gift card. Click here to claim: http://bit.ly/fakeprize",
+    "classification": "SPAM. The message uses common SPAM tactics such as a free gift card offer and a shortened URL.",
+    "evidence": "The message is classified as SPAM because it promises an unsolicited and unusually large gift card, uses a shortened URL to mask the link's destination, lacks personalization, and potentially creates a sense of urgency. These are common characteristics of phishing and scam attempts, as confirmed by search results detailing similar Walmart gift card scams.",
+    "critic_feedback": "Yes, I agree with this classification. The message exhibits characteristics of spam and phishing attempts."
+  },
+  {
+    "timestamp": "2025-04-29T10:55:30.081862",
+    "message": "Everybody dey play Daily Hammer! N5,000,000 up for grabs! Here's your chance to win BIG. Dial *20202# to subscribe today. T&Cs apply.",
+    "classification": "SPAM. The message uses attention-grabbing language, promises a large sum of money, and includes an urgent call to action.",
+    "evidence": "The message is classified as SPAM because it uses common tactics associated with lottery and prize scams, including an exaggerated prize claim, a suspicious call to action with a dial code, vague terms and conditions, a sense of urgency, and the use of a term (\"Daily Hammer\") that is associated with scams.",
+    "critic_feedback": "Yes, I agree with this classification. The message uses attention-grabbing language, promises a large sum of money, and includes an urgent call to action, all of which are typical characteristics of spam. The provided evidence further supports this classification."
+  },
+  {
+    "timestamp": "2025-04-29T11:44:21.226074",
+    "message": "Hello... Hope you are having a great day",
+    "classification": "NOT SPAM. The message is a generic greeting and lacks typical spam indicators.",
+    "evidence": "The message was likely classified as spam due to a combination of factors, including the lack of a subject line, a generic greeting, missing context, and potentially the sender's poor reputation.",
+    "critic_feedback": "Yes, I agree with this classification. The message is a generic greeting and lacks typical spam indicators."
+  }
+]
