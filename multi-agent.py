@@ -9,7 +9,7 @@ from langchain.tools.tavily_search import TavilySearchResults
 
 os.environ["GOOGLE_API_KEY"] = api_key
 os.environ["TAVILY_API_KEY"] = tavily
-# Setup
+
 llm = ChatGoogleGenerativeAI(
     temperature=0.7,
     model="gemini-2.0-flash-001",
@@ -17,11 +17,9 @@ llm = ChatGoogleGenerativeAI(
     top_p=0.9,
 )
 
-# --- Tools ---
 search_tool = TavilySearchResults(max_results=3)
 search_tools = [Tool(name="Tavily Search", func=search_tool.run, description="For finding info online.")]
 
-# --- Classifier Agent (Spam or Not) ---
 classifier_memory = ConversationBufferMemory(memory_key="chat_history")
 classifier = initialize_agent(
     tools=[],
@@ -31,7 +29,6 @@ classifier = initialize_agent(
     verbose=True,
 )
 
-# --- Evidence Agent (Tool: Web Search) ---
 evidence_memory = ConversationBufferMemory(memory_key="chat_history")
 evidence_agent = initialize_agent(
     tools=search_tools,
@@ -41,7 +38,6 @@ evidence_agent = initialize_agent(
     verbose=True,
 )
 
-# --- Critic Agent ---
 critic_memory = ConversationBufferMemory(memory_key="chat_history")
 critic_agent = initialize_agent(
     tools=[],
@@ -58,7 +54,6 @@ def log_to_file(data, log_path="logs.json"):
     }
     logs = []
 
-    # Load existing logs
     if os.path.exists(log_path):
         with open(log_path, "r") as f:
             try:
@@ -66,24 +61,20 @@ def log_to_file(data, log_path="logs.json"):
             except json.JSONDecodeError:
                 logs = []
 
-    # Append new entry and write back
     logs.append(log_entry)
     with open(log_path, "w") as f:
         json.dump(logs, f, indent=2)
     print("\n📝 Log saved to logs.json")
 
-# --- Orchestrator Function ---
 def spam_detection_pipeline(message):
     print(f"\n🔍 Checking message:\n{message}\n")
 
-    # Step 1: Classification
     classification_prompt = (
         f"Classify the following message as either SPAM or NOT SPAM. "
         f"Justify your answer briefly.\n\nMessage:\n{message}"
     )
     classification_result = classifier.run(classification_prompt)
 
-    # Step 2: Evidence gathering (if spam)
     evidence_output = ""
     if "SPAM" in classification_result.upper():
         print("\n🔎 Gathering evidence...")
@@ -93,7 +84,6 @@ def spam_detection_pipeline(message):
         )
         evidence_output = evidence_agent.run(evidence_prompt)
 
-    # Step 3: Critic Agent
     print("\n🧐 Critic is reviewing the decision...")
     review_prompt = (
         f"Message:\n{message}\n\nClassification:\n{classification_result}\n\n"
@@ -111,14 +101,12 @@ def spam_detection_pipeline(message):
     
     log_to_file(log_data)
 
-    # --- Final Output ---
     print("\n✅ Final Result")
     print("\n--- Classification ---\n", classification_result)
     if evidence_output:
         print("\n--- Evidence ---\n", evidence_output)
     print("\n--- Critic Review ---\n", critic_output)
 
-# --- Example Run ---
 if __name__ == "__main__":
     test_message = "Hello... Hope you are having a great day"
     #test_message = "Everybody dey play Daily Hammer! N5,000,000 up for grabs! Here's your chance to win BIG. Dial *20202# to subscribe today. T&Cs apply."
