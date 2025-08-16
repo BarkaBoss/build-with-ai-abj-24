@@ -1,2 +1,2 @@
-api_key = ''
-tavily = ''
+api_key = 'gemini'
+tavily = 'tavily'
